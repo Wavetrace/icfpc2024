@@ -1,6 +1,10 @@
 // recode string from stdin to stdout.
 // by default decode the string
-// with "-e" flag encode it
+// with "-e" flag encode it instead of decoding
+// with "-i" flag delete / append the string indicator
+// with "-n" flag echo newline at the end
+// 
+// WARNING: all the flags should be in the first arg, e.g. tr_str -es
 
 #include <iostream>
 #include <string>
@@ -42,11 +46,35 @@ void recode(bool decode) {
 
 int main(int argc, char** argv) {
     bool decode = true;
-    if (argc > 1 && argv[1] == string("-e"))
-        decode = false;
+    bool indicator = false;
+    bool newline = false;
+
+    if (argc > 1) {
+        string arg = argv[1];
+        if (arg.find('e') != string::npos)
+            decode = false;
+        if (arg.find('i') != string::npos)
+            indicator = true;
+        if (arg.find('n') != string::npos)
+            newline = true;
+    }
+
+    if (indicator) {
+        if (decode) {
+            // skip the indicator char
+            char i = cin.get();
+            if (i != 'S')
+                throw runtime_error("the -i flag was set and the first char is not 'S'");
+        }
+        else {
+            // encode
+            cout << 'S';
+        }
+    }
 
     recode(decode);
     // for convenience; maybe remove
-    cout << endl;
+    if (newline)
+        cout << endl;
 }
 
