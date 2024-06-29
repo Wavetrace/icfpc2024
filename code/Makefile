@@ -1,3 +1,3 @@
-all: decode
-decode: decode.cpp
-	g++ decode.cpp -o decode
+all: dec
+dec: decode.cpp
+	g++ decode.cpp -o dec
