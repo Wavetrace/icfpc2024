@@ -15,8 +15,8 @@
               (2  = (7  / 3 ) )  ? 
                (6  = (2  * 3 ) )  ? 
                 (3  = (1  + 2 ) )  ? 
-                 ($15818151   = "test" )  ? 
-                  (#"test"   = 15818151 )  ? 
+                 ($15319072   = "test" )  ? 
+                  (#"test"   = 15319072 )  ? 
                    !F   ? 
                     (-3   = (2  - 5 ) )  ? 
                      (3  = (5  - 2 ) )  ? 
@@ -24,7 +24,7 @@
                        (F  = F )  ? 
                         (3  = 3 )  ? 
                          T  ? 
-                          (("Self-check OK, send `solve language_test "  . $(2  + (311  * 124753942619 ) )  )  . "` to claim points for it" )  : 
+                          (("Self-check OK, send `solve language_test "  . $(2  + (308  * 118333201147 ) )  )  . "` to claim points for it" )  : 
                           "if is not correct"   : 
                          "binary = is not correct"   : 
                         "binary = is not correct"   : 

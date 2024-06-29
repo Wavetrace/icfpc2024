@@ -17,8 +17,8 @@ string encode(int_t i) {
 
     ostringstream os;
     while (i != 0) {
-        os << char(i % 93 + '!');
-        i /= 93;
+        os << char(i % 94 + '!');
+        i /= 94;
     }
 
     string res = os.str();
