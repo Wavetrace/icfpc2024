@@ -1,5 +1,7 @@
 #include "common.h"
 
+using int_t = long long int;
+
 string decodeString(const string& s) {
     const string in  = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
     const string out = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`|~ \n";
@@ -30,18 +32,19 @@ string getString(istream& is) {
     return decodeString(s);
 }
 
-int decodeInt(string s) {
-    long int val = 0;
+int_t decodeInt(string s) {
+    int_t val = 0;
 
     for (char c : s) {
         int digit = int(c) - int('!');
         // todo: check for overload
         val = val * 93 + digit;
+        // dlog << "decoding int, val = " << val << endl;
     }
     return val;
 }
 
-int getInt(istream& is) {
+int_t getInt(istream& is) {
     string s;
     is >> s;
 

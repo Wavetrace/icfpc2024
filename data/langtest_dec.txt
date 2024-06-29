@@ -1,4 +1,3 @@
-$ cat ../data/langtest.txt |  ./a.out 
 (((((( lambda n3.( lambda n3.( lambda n3.( lambda n2.n3  )  )  )  )  $ 1 )  $ 2 )  $ 3 )  $ 4 )  = 3 )  ? 
  ((( lambda n3.n3  )  $ 10 )  = 10 )  ? 
   ((3  D "test" )  = "t" )  ? 
@@ -25,7 +24,7 @@ $ cat ../data/langtest.txt |  ./a.out
                        (F  = F )  ? 
                         (3  = 3 )  ? 
                          T  ? 
-                          (("Self-check OK, send `solve language_test "  . $(2  + (308  * -1925883141 ) )  )  . "` to claim points for it" )  : 
+                          (("Self-check OK, send `solve language_test "  . $(2  + (308  * 118333201147 ) )  )  . "` to claim points for it" )  : 
                           "if is not correct"   : 
                          "binary = is not correct"   : 
                         "binary = is not correct"   : 
@@ -51,5 +50,4 @@ $ cat ../data/langtest.txt |  ./a.out
     "binary T is not correct"   : 
    "binary D is not correct"   : 
   "application is not correct"   : 
- "application is not correct"
- 
+ "application is not correct"  
