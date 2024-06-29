@@ -38,7 +38,7 @@ int_t decodeInt(string s) {
     for (char c : s) {
         int digit = int(c) - int('!');
         // todo: check for overload
-        val = val * 93 + digit;
+        val = val * 94 + digit;
         // dlog << "decoding int, val = " << val << endl;
     }
     return val;
@@ -164,4 +164,3 @@ int main() {
     }
 
 }
-
