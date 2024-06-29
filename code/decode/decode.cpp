@@ -3,7 +3,7 @@
 using int_t = long long int;
 
 string decodeString(const string& s) {
-    const string in  = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+    const string in = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
     const string out = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`|~ \n";
 
     ostringstream os;
@@ -11,7 +11,7 @@ string decodeString(const string& s) {
         // todo: consider static map
         size_t idx = in.find(c);
         if (idx == string::npos) {
-            throw error() << "wrong char: '" << c << "'" << " (" << int(c) <<")";
+            throw error() << "wrong char: '" << c << "'" << " (" << int(c) << ")";
         }
         os << out[idx];
     }
@@ -38,7 +38,7 @@ int_t decodeInt(string s) {
     for (char c : s) {
         int digit = int(c) - int('!');
         // todo: check for overload
-        val = val * 93 + digit;
+        val = val * 94 + digit;
         // dlog << "decoding int, val = " << val << endl;
     }
     return val;
@@ -155,7 +155,8 @@ int main() {
         parseToken(is, cout);
         if (!is.eof())
             throw error("input left");
-    } catch(exception& e) {
+    }
+    catch (exception& e) {
         cerr << "error parsing at " << is.tellg() << ": " << e.what() << endl;
         string s;
         getline(is, s);
@@ -164,4 +165,3 @@ int main() {
     }
 
 }
-
