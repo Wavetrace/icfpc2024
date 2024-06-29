@@ -1,0 +1,39 @@
+Ytest
+Yt
+Ytest
+Ytes
+Yte
+Yst
+Ytest
+Ytest
+Ytest
+Ytest
+Ytest
+YSelf-check OK, send `solve language_test 
+Y` to claim points for it
+Yif is not correct
+Ybinary = is not correct
+Ybinary = is not correct
+Ybinary = is not correct
+Ybinary - is not correct
+Yunary - is not correct
+Yunary ! is not correct
+Yunary # is not correct
+Yunary $ is not correct
+Ybinary + is not correct
+Ybinary * is not correct
+Ybinary / is not correct
+Ybinary / is not correct
+Ybinary % is not correct
+Ybinary % is not correct
+Ybinary > is not correct
+Ybinary < is not correct
+Ybinary | is not correct
+Ybinary | is not correct
+Ybinary & is not correct
+Ybinary & is not correct
+Ybinary . is not correct
+Ybinary T is not correct
+Ybinary D is not correct
+Yapplication is not correct
+Yapplication is not correct

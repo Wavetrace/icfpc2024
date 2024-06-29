@@ -52,6 +52,16 @@ int getInt(istream& is) {
     return decodeInt(s);
 }
 
+
+
+
+int ifIndent = 0;
+
+string indent() {
+    // return string(' ', ifIndent);
+    return string(ifIndent, ' ');
+}
+
 void parseToken(istream& is, ostream& os) {
     char i = is.get();
     char val = is.peek();
@@ -65,6 +75,8 @@ void parseToken(istream& is, ostream& os) {
         throw error("space!");
     if (i == 0)
         throw error("zero!");
+
+    // os << indent();
 
     if (false) {}
     else if (i == 'S') {
@@ -101,9 +113,13 @@ void parseToken(istream& is, ostream& os) {
         // os << "if(";
         parseToken(is, os);
         os << " ? ";
+        ++ifIndent;
+        os << endl << indent();
         parseToken(is, os);
         os << " : ";
+        os << endl << indent();
         parseToken(is, os);
+        --ifIndent;
     }
     else if (i == 'L') {
         int ref = getInt(is);
