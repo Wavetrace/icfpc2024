@@ -142,10 +142,11 @@ void parseToken(istream& is, ostream& os) {
         parseToken(is, os);
         // os << " if ";
         ++ifIndent;
-        os << endl << indent() << "then ";
+        // os << endl << indent() << "then ";
+        os << " then ";
         parseToken(is, os);
-        os << " : ";
-        os << endl << indent() << "else ";
+        // os << endl << indent() << "else ";
+        os << " else ";
         parseToken(is, os);
         --ifIndent;
     }
