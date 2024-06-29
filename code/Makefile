@@ -1,3 +1,5 @@
-all: dec
+all: dec dec_hs
 dec: decode.cpp
-	g++ decode.cpp -o dec
+	g++ $< -o $@
+dec_hs: decode_hs.cpp
+	g++ $< -o $@
