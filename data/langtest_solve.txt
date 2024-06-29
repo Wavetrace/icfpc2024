@@ -1,0 +1,2 @@
+$ echo -n 'solve language_test 4w3s0m3' | ./tr_str -ei | ../icfpc2024/utils/send.sh | ./tr_str -in
+Correct, you solved hello4!
