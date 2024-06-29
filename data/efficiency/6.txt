@@ -1,0 +1,9 @@
+(( lambda n6.(( lambda n7.((( lambda n1.(( lambda n2.(n1  $ (n2  $ n2 ) )  )  $ ( lambda n2.(n1  $ (n2  $ n2 ) )  ) )  )  $ ( lambda n3.( lambda n4.((n4  > 30 )  & (n6  $ (n7  $ n4 ) ) )  ? 
+ n4  : 
+ (n3  $ (n4  + 1 ) )   )  ) )  $ 2 )  )  $ (( lambda n1.(( lambda n2.(n1  $ (n2  $ n2 ) )  )  $ ( lambda n2.(n1  $ (n2  $ n2 ) )  ) )  )  $ ( lambda n3.( lambda n4.(n4  < 2 )  ? 
+ 1  : 
+ ((n3  $ (n4  - 1 ) )  + (n3  $ (n4  - 2 ) ) )   )  ) ) )  )  $ ( lambda n5.((( lambda n1.(( lambda n2.(n1  $ (n2  $ n2 ) )  )  $ ( lambda n2.(n1  $ (n2  $ n2 ) )  ) )  )  $ ( lambda n3.( lambda n4.(n4  = n5 )  ? 
+ T  : 
+ ((n5  % n4 )  = 0 )  ? 
+  F  : 
+  (n3  $ (n4  + 1 ) )    )  ) )  $ 2 )  ) ) 

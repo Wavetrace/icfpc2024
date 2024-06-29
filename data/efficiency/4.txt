@@ -1,0 +1,3 @@
+((( lambda n1.(( lambda n2.(n1  $ (n2  $ n2 ) )  )  $ ( lambda n2.(n1  $ (n2  $ n2 ) )  ) )  )  $ ( lambda n3.( lambda n4.(n4  < 2 )  ? 
+ 1  : 
+ ((n3  $ (n4  - 1 ) )  + (n3  $ (n4  - 2 ) ) )   )  ) )  $ 40 ) 
