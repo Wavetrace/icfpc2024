@@ -1,0 +1,4 @@
+(( lambda n10.(("L"  . ((n10  $ "." )  $ 49 ) )  . ((n10  $ ("
+"  . ((n10  $ "." )  $ 50 ) ) )  $ 49 ) )  )  $ ( lambda n1.(( lambda n1.(( lambda n2.(n1  $ (n2  $ n2 ) )  )  $ ( lambda n2.(n1  $ (n2  $ n2 ) )  ) )  )  $ ( lambda n3.( lambda n2.(n2  = 1 )  ? 
+ n1  : 
+ (n1  . (n3  $ (n2  - 1 ) ) )   )  ) )  ) ) 
