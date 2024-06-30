@@ -9,6 +9,8 @@ using namespace std;
 using Maze = vector<vector<char>>;
 using Node = tuple<int, int>;
 
+int dbg = 0;
+
 void print_maze(const Maze& maze) {
     for (auto& vec: maze) {
         for (auto& c: vec) {
@@ -64,7 +66,7 @@ string DFS::do_dfs() {
         parent_direction_.push_back(tmp2);
     }
 
-    cout << "Found start pos: " << startrow << ',' << startcol << '\n';
+    if (dbg) cout << "Found start pos: " << startrow << ',' << startcol << '\n';
 
     string moves{};
     stack<Node> s;
@@ -72,7 +74,6 @@ string DFS::do_dfs() {
     s.push(curr);
     visited_[startrow][startcol] = 'Q'; // mark as in-queue
     while (!s.empty()) {
-        print_maze(visited_);
         auto next = s.top();
         s.pop();
         moves.append(find_path(curr, next));
@@ -83,6 +84,7 @@ string DFS::do_dfs() {
             visited_[row][col] = 'Q';
         }
         visited_[get<0>(curr)][get<1>(curr)] = 'V';
+        if (dbg) print_maze(visited_);
     }
     return moves;
 }
@@ -182,15 +184,20 @@ vector<Node> DFS::get_children(Node curr) {
         }
     }
 
-    cout << to_string(curr) << " has children ";
+    if (dbg)
+        cout << to_string(curr) << " has children ";
     for (const auto& node: children) {
-        cout << to_string(node) << ',';
+        if (dbg) cout << to_string(node) << ',';
     }
-    cout << '\n';
+    if (dbg) cout << '\n';
     return children;
 }
 
-int main() {
+int main(int argc, char* argv[]) {
+    if (argc == 2) {
+        if (string(argv[1]) == "dbg")
+            dbg = 1;
+    }
     Maze maze;
     vector<char> row{};
     char ch;
@@ -198,14 +205,15 @@ int main() {
     while (ch = cin.get()) {
         if (cin.eof()) break;
         if (ch == '\n') {
+            if (row.size() == 0) break;
             maze.push_back(std::move(row));
             row = {};
         }
         else row.push_back(ch);
     }
 
-    cout << "DFS - processing maze:\n";
-    print_maze(maze);
+    if (dbg) cout << "DFS - processing maze:\n";
+    if (dbg) print_maze(maze);
 
     DFS dfs(std::move(maze));
     std::cout << dfs.do_dfs() << '\n';
