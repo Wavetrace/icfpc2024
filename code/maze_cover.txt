@@ -1,0 +1,21 @@
+Push starting point L to a stack.
+curr pos = pos of L.
+while (stack not empty) {
+  pop top of stack, call it T.
+  record move to T from curr pos.
+  curr pos = T.
+  Push all nonvisited accessible neighbors of T onto stack, mark as in-stack
+  Mark T as visited.
+}
+
+###.#...
+...L..##
+.#######
+
+
+............
+............
+.....Q......
+####QLQ#####
+vvvvQVQvvvvv
+vvvqvVVVvvvv
