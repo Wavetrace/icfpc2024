@@ -119,6 +119,7 @@ void parseToken(istream& is, ostream& os) {
             {'=', "=="},
             {'|', "||"},
             {'&', "&&"},
+            {'.', "++"},
             {'T', "`take`"},
             {'D', "`drop`"},
             {'$', ""},
