@@ -4,4 +4,4 @@ dec: decode.cpp
 dec_hs: decode_hs.cpp
 	g++ $< -o $@
 dfs: dfs.cpp
-	g++ -g -O0 dfs.cpp -o dfs
+	g++ $< -o $@

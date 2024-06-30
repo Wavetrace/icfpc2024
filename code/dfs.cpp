@@ -2,25 +2,104 @@
 #include <tuple>
 #include <vector>
 #include <stack>
+#include <string>
 
 using namespace std;
 
 using Maze = vector<vector<char>>;
 using Node = tuple<int, int>;
 
-tuple<int, int> find_start(const Maze& m) {
-    int maxrow = m.size();
-    int maxcol = m[0].size();
+void print_maze(const Maze& maze) {
+    for (auto& vec: maze) {
+        for (auto& c: vec) {
+            cout << c;
+        }
+        cout << '\n';
+    }
+}
+
+string to_string(const Node& node) {
+    const auto& [row, col] = node;
+    string s;
+    s += '(';
+    s.append(to_string(row));
+    s += ',';
+    s.append(to_string(col));
+    s += ')';
+
+    return s;
+}
+
+class DFS {
+public:
+    DFS(Maze maze);
+    string do_dfs();
+    Node find_start();
+    Node move_from(Node n, char direction);
+    char invert_direction(char direction);
+    string find_path(Node curr, Node next);
+    vector<Node> get_children(Node curr) ;
+
+private:
+    Maze maze_;
+    Maze visited_;
+    Maze parent_direction_; // For each node, record direction to move to get to
+                            // parent.
+};
+
+DFS::DFS(Maze maze) : maze_(maze) {}
+
+string DFS::do_dfs() {
+    const auto& [startrow, startcol] = find_start();
+
+    // vector<char> tmp(maze_[0].size(), 'N'); // 'N' is not visited, 'Q' is in q, 'V' is visited.
+    // for (int i = 0; i < maze_.size(); i++) {
+    //     visited_.push_back(tmp);
+    // }
+
+    visited_ = maze_;
+
+    vector<char> tmp2(maze_[0].size(), '-');
+    for (int i = 0; i < maze_.size(); i++) {
+        parent_direction_.push_back(tmp2);
+    }
+
+    cout << "Found start pos: " << startrow << ',' << startcol << '\n';
+
+    string moves{};
+    stack<Node> s;
+    auto curr = Node{startrow, startcol};
+    s.push(curr);
+    visited_[startrow][startcol] = 'Q'; // mark as in-queue
+    while (!s.empty()) {
+        print_maze(visited_);
+        auto next = s.top();
+        s.pop();
+        moves.append(find_path(curr, next));
+        curr = next;
+        vector<Node> children = get_children(curr);
+        for (const auto& [row, col]: children) {
+            s.push({row, col});
+            visited_[row][col] = 'Q';
+        }
+        visited_[get<0>(curr)][get<1>(curr)] = 'V';
+    }
+    return moves;
+}
+
+Node DFS::find_start() {
+    int maxrow = maze_.size();
+    int maxcol = maze_[0].size();
 
     for (int row = 0; row < maxrow; row++) {
         for (int col = 0; col < maxcol; col++) {
-            if (m[row][col] == 'L') return tuple(row, col);
+            if (maze_[row][col] == 'L') return tuple(row, col);
         }
     }
     return Node{-1, -1}; // should not happen
 }
 
-Node move_from(Node n, char direction) {
+Node DFS::move_from(Node n, char direction) {
     const auto [row, col] = n;
     if (direction == 'L') return {row, col-1};
     else if (direction == 'U') return {row-1, col};
@@ -29,7 +108,7 @@ Node move_from(Node n, char direction) {
     throw std::runtime_error("unexpected move direction!");
 }
 
-char invert_directon(char direction) {
+char DFS::invert_direction(char direction) {
     switch (direction) {
     case 'L': return 'R';
     case 'U': return 'D';
@@ -40,69 +119,74 @@ char invert_directon(char direction) {
     }
 }
 
-string find_path(Node curr, Node next)
+string DFS::find_path(Node curr, Node next)
 {
     string path_from_curr_to_next;
     if (curr == next) return {};
     // Use parent direction matrix to traverse back from curr to parent of
     // next.
     const auto [next_row, next_col] = next;
-    Node next_parent = move_from(next, parent_direction[next_row][next_col]);
+    Node next_parent = move_from(next, parent_direction_[next_row][next_col]);
 
-    for (while curr != next_parent) {
+    while (curr != next_parent) {
         const auto& [row, col] = curr;
-        char direction = parent_direction[row][col];
+        char direction = parent_direction_[row][col];
         curr = move_from(curr, direction);
-        path_from_curr_to_next.append(direction);
+        path_from_curr_to_next += direction;
     }
     // Add step from next_parent to next
-    path_from_curr_to_next.append(
-        invert_direction(parent_direction[next_row][next_col]));
+    path_from_curr_to_next +=
+        invert_direction(parent_direction_[next_row][next_col]);
 
     return path_from_curr_to_next;
 }
 
-vector<Node> get_children(Node curr) {
+vector<Node> DFS::get_children(Node curr) {
     vector<Node> children;
     // check left, up, right, down
     const auto& [row, col] = curr;
     // left
     if (col-1 >= 0) {
-        if (maze[row][col-1] == '.') {
-            if (visited[row][col-1] == 'N') {
+        if (maze_[row][col-1] == '.') {
+            if (visited_[row][col-1] == '.') {
                 children.push_back(Node{row, col-1});
-                parent_direction(row, col) = 'R';
+                parent_direction_[row][col-1] = 'R';
             }
         }
     }
     // up
     if (row-1 >= 0) {
-        if (maze[row-1][col] == '.') {
-            if (visited[row-1][col] == 'N') {
+        if (maze_[row-1][col] == '.') {
+            if (visited_[row-1][col] == '.') {
                 children.push_back(Node{row-1, col});
-                parent_direction(row-1, col) = 'D';
+                parent_direction_[row-1][col] = 'D';
             }
         }
     }
     // right
-    if (col+1 < maze[0].size()) {
-        if (maze[row][col+1] == '.') {
-            if (visited[row][col+1] == 'N') {
+    if (col+1 < maze_[0].size()) {
+        if (maze_[row][col+1] == '.') {
+            if (visited_[row][col+1] == '.') {
                 children.push_back(Node{row, col+1});
-                parent_direction(row, col) = 'L';
+                parent_direction_[row][col+1] = 'L';
             }
         }
     }
     // down
-    if (row+1 < maze.size()) {
-        if (maze[row+1][col] == '.') {
-            if (visited[row+1][col] == 'N') {
+    if (row+1 < maze_.size()) {
+        if (maze_[row+1][col] == '.') {
+            if (visited_[row+1][col] == '.') {
                 children.push_back(Node{row+1, col});
-                parent_direction(row+1, col) = 'U';
+                parent_direction_[row+1][col] = 'U';
             }
         }
     }
 
+    cout << to_string(curr) << " has children ";
+    for (const auto& node: children) {
+        cout << to_string(node) << ',';
+    }
+    cout << '\n';
     return children;
 }
 
@@ -110,6 +194,7 @@ int main() {
     Maze maze;
     vector<char> row{};
     char ch;
+    // Read maze from file/stdin
     while (ch = cin.get()) {
         if (cin.eof()) break;
         if (ch == '\n') {
@@ -119,39 +204,9 @@ int main() {
         else row.push_back(ch);
     }
 
-    for (auto& vec: maze) {
-        for (auto& c: vec) {
-            cout << c;
-        }
-        cout << '\n';
-    }
+    cout << "DFS - processing maze:\n";
+    print_maze(maze);
 
-    const auto& [startrow, startcol] = find_start(maze);
-    Maze visited;
-    Maze parent_direction; // For each node, record direction to move to get to parent.
-    vector<char> tmp(maze[0].size(), 'N'); // 'N' is not visited, 'Q' is in q, 'V' is visited.
-    for (int i = 0; i < maze.size(); i++) {
-        visited.push_back(tmp);
-    }
-
-    cout << "Found start pos: " << startrow << ',' << startcol << '\n';
-
-    string moves{};
-    stack<Node> s;
-    auto curr = Node{startrow, startcol};
-    s.push(curr);
-    visited[startrow][startcol] = 'Q'; // mark as in-queue
-    while (!s.empty()) {
-        auto next = s.top();
-        s.pop();
-        //if (visited[get<0>(next)][get<1>(next)] == 'V') continue;
-        moves.append(find_path(curr, next);
-        curr = next;
-        vector<Node> children = get_children(curr);
-        for (const auto& [row, col]: children) {
-            s.push({row, col});
-            visited[row][col] = 'Q';
-        }
-        visited[get<0>(curr)][get<1>(curr)] = 'V';
-    }
+    DFS dfs(std::move(maze));
+    std::cout << dfs.do_dfs() << '\n';
 }

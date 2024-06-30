@@ -5,6 +5,7 @@ while (stack not empty) {
   record move to T from curr pos.
   curr pos = T.
   Push all nonvisited accessible neighbors of T onto stack, mark as in-stack
+  Record step direction to parent from newly found neighbors.
   Mark T as visited.
 }
 
