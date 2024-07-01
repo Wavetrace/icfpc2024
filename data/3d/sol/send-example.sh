@@ -1,0 +1,1 @@
+(echo 'solve 3d3 '; cat ../icfpc2024/data/3d/sol/3-sol.txt ) | ./tr_str -ei | ../icfpc2024/utils/send.sh | ../icfpc2024/utils/dec_3dtrace.pl
