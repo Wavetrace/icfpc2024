@@ -35,6 +35,9 @@ int_t decodeInt(string s) {
     for (char c : s) {
         int digit = int(c) - int('!');
         // todo: check for overload
+        if (val >= numeric_limits<int_t>::max() / 94)
+            throw error() << "integer overflow: " << s;
+        
         val = val * 94 + digit;
     }
     return val;
@@ -139,6 +142,7 @@ void parseToken(istream& is, ostream& os) {
     }
     else if (i == '?') {
         is.get(); // space
+        os << '(';
         os << "if ";
         parseToken(is, os);
         // os << " if ";
@@ -149,6 +153,7 @@ void parseToken(istream& is, ostream& os) {
         // os << endl << indent() << "else ";
         os << " else ";
         parseToken(is, os);
+        os << ')';
         --ifIndent;
     }
     else if (i == 'L') {

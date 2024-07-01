@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <algorithm>
 #include <map>
+#include <limits>
 
 #include <cassert>
 
